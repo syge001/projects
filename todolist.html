@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: rgb(199, 247, 247);
+        }
+
+        h1{
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .input-container{
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        input[type="text"]{
+            width: 70%;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid antiquewhite;
+            margin-right: 20px;
+        }
+
+        button{
+            background-color: green;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            border: none;
+        }
+        
+        button:hover{
+            background-color: white;
+            border: 1px solid green;
+            color: black;
+        }
+
+        li{
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        li:hover{
+            background-color: rgb(121, 253, 172);
+            border-radius: 20px;
+        }
+
+        li label{
+            font-size: 18px;
+        }
+
+        .completed{
+            text-decoration: line-through;
+            color: rgb(165, 163, 163);
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+
+    <div class="input-container">
+        <input type="text" id="new-item-input" class="text" placeholder="Add a new item....">
+
+        <button id="add-item-btn">Add</button>
+    </div>
+
+    <ul id="item-list">
+   
+    </ul>
+
+    <script>
+        const newItemInput = document.getElementById('new-item-input');
+        const addItemBtn = document.getElementById('add-item-btn')
+        const itemList = document.getElementById('item-list')
+
+        addItemBtn.addEventListener('click', addItem); //event for adding list items
+
+
+        //function to add list items
+        function addItem(){
+              if(newItemInput.value !==''){
+                const li = document.createElement('li')
+                const checkbox = document.createElement('input');
+                const label = document.createElement('label');
+                const deleteButton = document.createElement('button')
+
+                checkbox.type = 'checkbox'; //used for selecting input type of the const checkbox 
+                checkbox.addEventListener('change', toggleCompleted) //event for striking out list items
+
+                label.textContent = newItemInput.value //returning value from the user to const label
+                newItemInput.value = ''; //returns the input value
+
+                deleteButton.textContent= 'Delete' //text content of the button
+                deleteButton.addEventListener('click', deleteItem) //event for deleting list items
+
+                //append is used to insert a set of nodes or content at the end of a selected element
+ 
+                //appending checkbox, labels and delete button to each list items
+
+                li.appendChild(checkbox);
+                li.appendChild(label)
+                li.appendChild(deleteButton)
+
+                itemList.appendChild(li) //returning the appended list items to the ul
+              }  
+        }
+
+        //function for striking out lists 
+        function toggleCompleted(){
+            const checkbox = this;
+            const label = checkbox.nextSibling;
+            if(checkbox.checked){
+                label.classList.add('completed')
+            }else{
+                label.classList.remove('completed')
+            }
+        }
+
+        //function to delete list items
+        function deleteItem(){
+            const li = this.parentNode;
+            itemList.removeChild(li)
+        }
+
+        
+    </script>
+</body>
+</html>
